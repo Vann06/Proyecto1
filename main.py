@@ -42,6 +42,7 @@ def main():
                 except ValueError:
                     print("ERROR: Ingrese algo valido")
                     continue
+            #Si solo son dos conjuntos se envian los conjuntos de una vez
             else:
                 operar_con(sets[0], sets[1])
         elif opcion == 3:
@@ -51,7 +52,7 @@ def main():
             print("ERROR: Ingrese algunas de las opciones disponibles")
             menu()
 
-#MENU principal
+#MENU principal de opciones
 def menu():
     print("********* Bienvenido a Operaciones con Conjuntos **********")
     print()
@@ -68,21 +69,22 @@ def construir_con():
     print("*** Construccion de Conjuntos ***")
     elemento = input(("Ingrese los elementos del conjunto que desea agregar:\n"
                       "OPCIONES: letras (A-Z) y numeros (0-9)\n >")).lower()
+    #Un set de los unicos elementos validos
     elementos_validos = set('abcdefghijklmnopqrstuvwxyz0123456789')
     conjunto_user = set()
 
-    for e in elemento.strip():
+    for e in elemento:
         # Ignorar espacios
         if e == ' ':
             continue
-        # Agregar al conjunto si pertenece a las opciones
+        # Agregar al conjunto si pertenece a las opciones validas
         elif e in elementos_validos:
             conjunto_user.add(e)
         else:
             print(f"ERROR: {e} NO pertenece a las opciones permitidas.")
             return menu()
 
-    #Verificar que el conjunto no este vacio
+    #Verificar que el conjunto no este vacio??
     if conjunto_user:
         print(f"Conjunto construido: {conjunto_user}")
     else:
@@ -92,7 +94,7 @@ def construir_con():
     return conjunto_user
 
 
-# MENU de operaciones a realizar
+# MENU de Operaciones
 def operar_con(set1, set2):
     while True:
         print("*** Operaciones con Conjuntos ***")
@@ -106,12 +108,13 @@ def operar_con(set1, set2):
             continue
         match opcion:
             case  1:
+                #El complemento regresa lo que hay en el conjunto 2 pero no en el 1
                 print("*COMPLEMENTO*")
                 conjunto_resultado = set()
                 for e in set2:
                     encontrado = False
                     for i in set1:
-                        if e==i:
+                        if e == i:
                             encontrado = True
                             break
                     if not encontrado:
@@ -120,6 +123,7 @@ def operar_con(set1, set2):
                 else:
                     print("El complemento del conjunto 1 al conjunto 2 es \n", conjunto_resultado)
             case 2:
+                #En la union se crea un nuevo conjunto de todos los valores de cada uno
                 print("*UNION*")
                 conjunto_resultado = set()
                 for e in set1:
@@ -131,24 +135,29 @@ def operar_con(set1, set2):
                 print("El conjunto resultante de la union de los conjuntos ingresados es\n",conjunto_resultado)        
                     
             case 3:
+                #Es un conjunto de los valores que estan en los dos
                 print("*INTERSECCION*")
                 conjunto_resultado = set()
                 for e in set1:
                     for i in set2:
-                        if e==i:
+                        #si son iguales los agrega
+                        if e == i:
                             conjunto_resultado.add(e)
+
+                #Si no se guardo ninguno, no hay ninguno igual
                 if len(conjunto_resultado) == 0:
                     print("No hay elemnetos en comun entre los conjuntos seleccionados")
                 else:
                     print("La interseccion de los conjuntos es \n", conjunto_resultado)        
 
             case 4:
+                #Que valores tienen de diferente del primero con el segundo
                 print("*DIFERENCIA*")
                 conjunto_resultado = set()
                 for e in set1:
                     encontrado = False
                     for i in set2:
-                        if e==i:
+                        if e == i:
                             encontrado = True
                             break
                     if not encontrado:
@@ -158,12 +167,13 @@ def operar_con(set1, set2):
                 else:
                     print("La diferencia del conjunto 1 al conjunto 2 es \n", conjunto_resultado)        
             case 5:
+                #Se crea un conjunto de lo que haya en ninguno de los dos
                 print("*DIFERENCIA SIMETRICA*")
                 conjunto_resultado = set()
                 for e in set1:
                     encontrado = False
                     for i in set2:
-                        if e==i:
+                        if e == i:
                             encontrado = True
                             break
                     if not encontrado:
@@ -172,7 +182,7 @@ def operar_con(set1, set2):
                 for e in set2:
                     encontrado = False
                     for i in set1:
-                        if e==i:
+                        if e == i:
                             encontrado = True
                             break
                     if not encontrado:
@@ -185,7 +195,8 @@ def operar_con(set1, set2):
 
             case 6:
                 return
-            case _ :
+            #Si hay un espacio
+            case _:
                 print("ERROR: Opcion invalida")
 
 
