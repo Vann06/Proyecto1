@@ -162,6 +162,7 @@ def main():
                 except ValueError:
                     print("ERROR: Ingrese algo válido")
                     continue
+            #Si solo son dos conjuntos se envian los conjuntos de una vez
             else:
                 operar_con(conjuntos_bin[0], conjuntos_bin[1])
 
@@ -170,6 +171,159 @@ def main():
             break
 
         else:
+<<<<<<< HEAD
             print("ERROR: Ingrese alguna de las opciones disponibles")
+=======
+            print("ERROR: Ingrese algunas de las opciones disponibles")
+            menu()
+
+#MENU principal de opciones
+def menu():
+    print("********* Bienvenido a Operaciones con Conjuntos **********")
+    print()
+    print("Menu Principal")
+    opcion = (input("1: Construir conjuntos "
+                    "\n2: Operar conjuntos "
+                    "\n3: Finalizar Programa "
+                    "\nPorfavor ingrese su opcion\n>  "))
+    return opcion
+
+
+# Funcion para contruir un conjunto
+def construir_con():
+    print("*** Construccion de Conjuntos ***")
+    elemento = input(("Ingrese los elementos del conjunto que desea agregar:\n"
+                      "OPCIONES: letras (A-Z) y numeros (0-9)\n >")).lower()
+    #Un set de los unicos elementos validos
+    elementos_validos = set('abcdefghijklmnopqrstuvwxyz0123456789')
+    conjunto_user = set()
+
+    for e in elemento:
+        # Ignorar espacios
+        if e == ' ':
+            continue
+        # Agregar al conjunto si pertenece a las opciones validas
+        elif e in elementos_validos:
+            conjunto_user.add(e)
+        else:
+            print(f"ERROR: {e} NO pertenece a las opciones permitidas.")
+            return menu()
+
+    #Verificar que el conjunto no este vacio??
+    if conjunto_user:
+        print(f"Conjunto construido: {conjunto_user}")
+    else:
+        print("No se agregaron elementos válidos al conjunto.")
+        return menu()
+
+    return conjunto_user
+
+
+# MENU de Operaciones
+def operar_con(set1, set2):
+    while True:
+        print("*** Operaciones con Conjuntos ***")
+        print("Opciones Disponibles:")
+        print("1: Complemento\n2: Union\n3: Interseccion\n4: Diferencia\n"
+              "5: Diferencia Simetrica\n6: Regresar a menu principal")
+        try:
+            opcion = int(input("Ingrese alguna de las opciones\n>"))
+        except ValueError:
+            print("ERROR: Ingrese algo valido")
+            continue
+        match opcion:
+            case  1:
+                #El complemento regresa lo que hay en el conjunto 2 pero no en el 1
+                print("*COMPLEMENTO*")
+                conjunto_resultado = set()
+                for e in set2:
+                    encontrado = False
+                    for i in set1:
+                        if e == i:
+                            encontrado = True
+                            break
+                    if not encontrado:
+                        conjunto_resultado.add(e)
+                    print("Los conjuntos son iguales")
+                else:
+                    print("El complemento del conjunto 1 al conjunto 2 es \n", conjunto_resultado)
+            case 2:
+                #En la union se crea un nuevo conjunto de todos los valores de cada uno
+                print("*UNION*")
+                conjunto_resultado = set()
+                for e in set1:
+                    conjunto_resultado.add(e)
+
+                for e in set2:
+                    conjunto_resultado.add(e)
+
+                print("El conjunto resultante de la union de los conjuntos ingresados es\n",conjunto_resultado)        
+                    
+            case 3:
+                #Es un conjunto de los valores que estan en los dos
+                print("*INTERSECCION*")
+                conjunto_resultado = set()
+                for e in set1:
+                    for i in set2:
+                        #si son iguales los agrega
+                        if e == i:
+                            conjunto_resultado.add(e)
+
+                #Si no se guardo ninguno, no hay ninguno igual
+                if len(conjunto_resultado) == 0:
+                    print("No hay elemnetos en comun entre los conjuntos seleccionados")
+                else:
+                    print("La interseccion de los conjuntos es \n", conjunto_resultado)        
+
+            case 4:
+                #Que valores tienen de diferente del primero con el segundo
+                print("*DIFERENCIA*")
+                conjunto_resultado = set()
+                for e in set1:
+                    encontrado = False
+                    for i in set2:
+                        if e == i:
+                            encontrado = True
+                            break
+                    if not encontrado:
+                        conjunto_resultado.add(e)    
+                if len(conjunto_resultado) == 0:
+                    print("Los conjuntos son iguales")
+                else:
+                    print("La diferencia del conjunto 1 al conjunto 2 es \n", conjunto_resultado)        
+            case 5:
+                #Se crea un conjunto de lo que haya en ninguno de los dos
+                print("*DIFERENCIA SIMETRICA*")
+                conjunto_resultado = set()
+                for e in set1:
+                    encontrado = False
+                    for i in set2:
+                        if e == i:
+                            encontrado = True
+                            break
+                    if not encontrado:
+                        conjunto_resultado.add(e)    
+
+                for e in set2:
+                    encontrado = False
+                    for i in set1:
+                        if e == i:
+                            encontrado = True
+                            break
+                    if not encontrado:
+                        conjunto_resultado.add(e)
+
+                if len(conjunto_resultado) == 0:
+                    print("Los conjuntos son iguales")
+                else:
+                    print("La simetrica diferencia de los conjuntos es \n", conjunto_resultado)  
+
+            case 6:
+                return
+            #Si hay un espacio
+            case _:
+                print("ERROR: Opcion invalida")
+
+>>>>>>> 7381efa57f713b08cd0f8a8178cc371f0d2aa068
 
 main()
