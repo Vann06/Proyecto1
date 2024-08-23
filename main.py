@@ -118,9 +118,13 @@ def construir_con():
 
     for e in elemento.strip():
         # Valida si esta en caracteres y no esta repetido
-        if e in caracter and e not in conjunto:
+        if e == " ":
+            continue
+
+        elif e in caracter and e not in conjunto:
             conjunto.append(e)
         # Si ingresa algo erroneo no se guarda el conjunto
+
         elif e not in caracter:
             print(f"ERROR: {e} NO pertenece a las opciones permitidas.")
             return None
